@@ -23,7 +23,7 @@ class Elevator {
     public divElement: HTMLDivElement;
     public elevatorImg:HTMLImageElement;
     public destination: number = 0;
-    // public active: boolean = false;
+    public active: boolean = false;
     public finishTim: number = 0; 
 
     constructor(elvNum: number) {
@@ -35,8 +35,8 @@ class Elevator {
         this.divElement.appendChild(this.elevatorImg);
     }
 
-    private speedCalcul(targetFloor: number){
-        return Math.abs(this.destination - targetFloor) * 0.5;
+    private speedCalcul(origin: number, targetFloor: number){
+        return Math.abs(origin - targetFloor) * 0.5;
     }
 
     
@@ -45,8 +45,8 @@ class Elevator {
     }
 
 
-    public move(targetFloor: number) {
-        let speed = this.speedCalcul(targetFloor);
+    public move(origin: number, targetFloor: number) {
+        let speed = this.speedCalcul(origin, targetFloor);
         let target = this.targetCalcul(targetFloor);
 
 
@@ -57,22 +57,12 @@ class Elevator {
 }
 
 
-class order {
-    startTim: number;
-    finishTim: number;
-    target: number; // floor
-    constructor(target: number, finishTim: number){
-        this.startTim =  Date.now();
-        this.finishTim = finishTim;
-        this.target = target;
-    }
-}
 
 
 class ElevatorShaft {
     public divElement: HTMLDivElement;
     public elvArr: Elevator[] = [];
-    public orderQueue: order[] = [];
+    public orderQueue: number[] = [];
     // private elvAvailable = true
 
 
@@ -87,12 +77,13 @@ class ElevatorShaft {
         }
     }
 
-    
+    // private selectElv(targetFloor: number){
+       
+    //     return theElev;
+    // }
 
 
     public ElvOrder(targetFloor: number){
-
-
         let theElev: Elevator = this.elvArr[0]; 
         let minTim: number = this.elvArr[0].finishTim + Math.abs(theElev.destination - targetFloor)*0.5;
         this.elvArr.forEach(elev => {
@@ -102,11 +93,20 @@ class ElevatorShaft {
                 minTim = elvTim;
                 }   
         });
-        theElev.finishTim =+ Math.abs(targetFloor - theElev.destination)*0.5;
+
+        
+        let origin = theElev.destination;
         theElev.destination = targetFloor;
+
+        let time = Math.abs(targetFloor - theElev.destination)*0.5
+        theElev.finishTim =+ Math.abs(targetFloor - theElev.destination)*0.5;
+
+
+
         setTimeout(() => {
-            theElev.move(targetFloor) 
-        }, minTim); 
+            theElev.move(origin, targetFloor) 
+        }, theElev.finishTim + 2); 
+
         
     }
 }
@@ -146,9 +146,11 @@ class Building {
     }   
 
     private handleFloorClick = (targetFoor: number) => {
+
         console.log(`Floor ${targetFoor} clicked`);
-        // this.elevators.orderQueue.push(targetFoor);
+        this.elevators.orderQueue.push(targetFoor);
         this.elevators.ElvOrder(targetFoor);
+
     }
 }
 
