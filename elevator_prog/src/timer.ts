@@ -21,7 +21,7 @@ export class TimScreen {
             }
         };
     
-        updateDisplay(); // Call updateDisplay immediately to avoid initial delay
+        updateDisplay(); // Call updateDisplay 
     
         const countdown = setInterval(updateDisplay, 500); // Update every 500 milliseconds
     }

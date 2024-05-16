@@ -3,7 +3,6 @@ export class Elevator {
     public divElement: HTMLDivElement;
     public elevatorImg:HTMLImageElement;
     public currentDestinationFloor: number = 0;
-    public active: boolean = false;
     public finishTime: number = 0; 
     private  audio = new Audio('../music/ding.mp3');
 
