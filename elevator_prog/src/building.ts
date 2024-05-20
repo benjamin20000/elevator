@@ -1,4 +1,4 @@
-import { ElevatorSistem } from "./elevator_sistem";
+import { ElevatorSystem } from "./elevator_sistem";
 import { FloorColumn } from "./floor_column";
 import { ElevatorConfig } from "./settings";
 
@@ -9,7 +9,7 @@ export class Building {
     private divElement: HTMLDivElement;
     private elevatorsNum: number = ElevatorConfig.numberOfElevators;
     private floorsNum: number = ElevatorConfig.numberOfFloors;
-    private elevators: ElevatorSistem;
+    private elevators: ElevatorSystem;
     private floors: FloorColumn;
 
     /**
@@ -22,7 +22,7 @@ export class Building {
 
         // Initialize floors and elevators
         this.floors = new FloorColumn(this.floorsNum, this.handleFloorClick.bind(this));
-        this.elevators = new ElevatorSistem(this.elevatorsNum);
+        this.elevators = new ElevatorSystem(this.elevatorsNum);
 
         // Append floors and elevators to the building container
         this.divElement.appendChild(this.floors.divElement);
