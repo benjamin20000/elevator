@@ -1,4 +1,4 @@
-import { ElevatorSystem } from "./elevator_sistem";
+import { ElevatorSystem } from "./elevator_system";
 import { FloorColumn } from "./floor_column";
 import { ElevatorConfig } from "./settings";
 
